@@ -14,6 +14,10 @@ header {
     justify-content: space-around;
 }
 
+.header_text{
+    font-weight: bold;
+}
+
 main {
 
     text-align: center;
@@ -32,11 +36,10 @@ main {
 }
 
 #left {
-  
-   flex: 50%
+   flex: 45%
 }
 #right {
-    flex: 50%;
+    flex: 45%;
 }
 
 /* Responsive layout - makes a one column layout instead of a two-column layout */
@@ -47,10 +50,6 @@ main {
 }
 
 .list-group-item {
-    display: block;
-
-    float: right;
-
     font-size: 2rem;
     font-weight: bold;
     word-spacing: 1.5rem;

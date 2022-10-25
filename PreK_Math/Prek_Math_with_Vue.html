@@ -30,11 +30,8 @@
                     sum_to: 0,
                     total: 0,
                     operators: ['+', '-'],
-                    formulas: [
-                        { id: id++, text: '45 - 23 =' },
-                        { id: id++, text: '40 + 34 =' },
-                        { id: id++, text: '29 - 21 =' }
-                    ]
+                    formulas_left: [],
+                    formulas_right: []
                 }
             },
             methods: {
@@ -49,13 +46,13 @@
                     }
                     return randomInt
                 },
-                generateOneFormula() {
+                generateOneFormula(list) {
                     const num1 = this.generateRandomInt();
                     const num2 = this.generateRandomInt();;
                     const operator_index = Math.floor(Math.random() * this.operators.length);
                     const operator = this.operators[operator_index];
 
-                    const printFormula = (x, y) => {
+                    const printFormula = (x, y,list) => {
                         const formula = {}
                         formula.id = id++
                         formula.text = x.toString()
@@ -63,19 +60,25 @@
                             .concat(' ', y.toString())
                             .concat(' ', '=');
 
-                        this.formulas.push(formula);
+                        // this.formulas.push(formula);
+                        list.push(formula);
+                        console.log('formula',formula)
                         return formula;
                     }
 
                     if (operator === '-' && num1 < num2) {
-                        printFormula(num2, num1);
+                        printFormula(num2, num1,list);
                     } else {
-                        printFormula(num1, num2);
+                        printFormula(num1, num2,list);
                     }
                 },
                 generateAllFormulas() {
                     console.log('generate formulas');
-                    this.generateOneFormula();
+                    for(let i=0; i<this.total; i+=2) {
+                        this.generateOneFormula(this.formulas_left);
+                        this.generateOneFormula(this.formulas_right)
+                    }
+                    
                 }
             }
         }).mount('#app')
@@ -84,36 +87,36 @@
     <div id="app">
         <header class="pt-5">
             <div>
-                <span>Minimum Number</span>
+                <span class="header_text">Minimum Number </span>
                 <input v-model="min_num" placeholder="Type here">
             </div>
 
             <div>
-                <span>Sums to </span>
+                <span class="header_text">Sums to </span>
                 <input v-model="sum_to" placeholder="Type here">
             </div>
 
             <div>
-                <span>Total Challenges</span>
+                <span class="header_text">Total Challenges </span>
                 <input v-model="total" placeholder="Type here">
             </div>
 
             <div>
-                <button type="button" class="btn btn-primary" v-on:click="generateAllFormulas">Generate
+                <button type="button" class="btn btn-primary btn-sm" v-on:click="generateAllFormulas">Generate
                     formulas</button>
             </div>
 
             <div>
-                <button type="button" class="btn btn-secondary" v-on:click="generatePdf">Generate PDF</button>
+                <button type="button" class="btn btn-secondary btn-sm" v-on:click="generatePdf">Generate PDF</button>
             </div>
         </header>
-        <main class="pt-5">
-          <p id="title"> Adding numbers to {{sum_to}}</p>
-           
+        <main class="p-5">
+            <p id="title"> Adding numbers to {{sum_to}}</p>
+
             <div id="problems_container">
                 <div id="left">
                     <ul class='list-group'>
-                        <li class="list-group-item" v-for="formula in formulas" :key="formula.id">
+                        <li class="list-group-item" v-for="formula in formulas_left" :key="formula.id">
                             {{formula.text}}
                         </li>
                     </ul>
@@ -121,7 +124,7 @@
 
                 <div id="right">
                     <ul class='list-group'>
-                        <li class="list-group-item" v-for="formula in formulas" :key="formula.id">
+                        <li class="list-group-item" v-for="formula in formulas_right" :key="formula.id">
                             {{formula.text}}
                         </li>
                     </ul>
