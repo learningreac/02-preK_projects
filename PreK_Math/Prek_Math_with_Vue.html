@@ -48,37 +48,39 @@
                 },
                 generateOneFormula(list) {
                     const num1 = this.generateRandomInt();
-                    const num2 = this.generateRandomInt();;
+                    const num2 = this.generateRandomInt();
                     const operator_index = Math.floor(Math.random() * this.operators.length);
                     const operator = this.operators[operator_index];
 
-                    const printFormula = (x, y,list) => {
+                    const printFormula = (x, y, list, operator) => {
                         const formula = {}
                         formula.id = id++
                         formula.text = x.toString()
                             .concat(' ', operator)
                             .concat(' ', y.toString())
                             .concat(' ', '=');
-
-                        // this.formulas.push(formula);
                         list.push(formula);
-                        console.log('formula',formula)
+                        console.log('formula', formula)
                         return formula;
                     }
-
-                    if (operator === '-' && num1 < num2) {
-                        printFormula(num2, num1,list);
-                    } else {
-                        printFormula(num1, num2,list);
+                    if (num1 + num2 <= 100) {
+                        if (operator === '-' && num1 < num2) {
+                            printFormula(num2, num1, list, operator);
+                        } else {
+                            printFormula(num1, num2, list, operator);
+                        }
+                    } else { // only '-'
+                        num1>=num2?  printFormula(num1, num2, list, "-"): printFormula(num2, num1, list, "-");
                     }
+                    
                 },
                 generateAllFormulas() {
                     console.log('generate formulas');
-                    for(let i=0; i<this.total; i+=2) {
+                    for (let i = 0; i < this.total; i += 2) {
                         this.generateOneFormula(this.formulas_left);
                         this.generateOneFormula(this.formulas_right)
                     }
-                    
+
                 }
             }
         }).mount('#app')
@@ -111,7 +113,7 @@
             </div>
         </header>
         <main class="p-5">
-            <p id="title"> Adding numbers to {{sum_to}}</p>
+            <p id="title"> Addition and Substraction within {{sum_to}}</p>
 
             <div id="problems_container">
                 <div id="left">
