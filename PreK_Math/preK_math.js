@@ -1,6 +1,14 @@
 console.log('js worked')
 
-let total_challenges = 16;
+// pdf
+const jsPDF = window.jspdf.jsPDF;
+const doc = new jsPDF();
+doc.text("This is the default font.", 20, 20);
+const generate_btn = document.querySelector('#generate_btn');
+generate_btn.addEventListener('click', () => doc.save("myPdf.pdf"))
+console.log(generate_btn) 
+
+let total_challenges = 20;
 let max_num = 50;
 let min_num = 10;
 let operators = ['+', '-'];

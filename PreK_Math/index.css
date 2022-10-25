@@ -1,6 +1,6 @@
-body {
+/* body {
     overflow: hidden;
-}
+} */
 #main_container {
     background-color: azure;
     width: 100%;
@@ -12,6 +12,7 @@ body {
     background-color: azure;
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
 }
 
 #problems_container {
