@@ -24,7 +24,7 @@ const getRandomInt = (min,max) => {
     return result
 }
 
-const getRandomFormula = (i) => {
+const getRandomFormula = () => {
     const num1 = getRandomInt(min_num, max_num);
     const num2 = getRandomInt(min_num, max_num);
     const operator_index = Math.floor(Math.random() * operators.length);
@@ -41,7 +41,6 @@ const getRandomFormula = (i) => {
         return formula;
     }
 
-    console.log(i, operator)
     if (operator === '-' && num1 < num2) {
         printFormula(num2, num1);
     } else {

@@ -29,6 +29,7 @@
                     min_num: 0,
                     sum_to: 0,
                     total: 0,
+                    operators: ['+', '-'],
                     formulas: [
                         { id: id++, text: '45 - 23 =' },
                         { id: id++, text: '40 + 34 =' },
@@ -42,16 +43,39 @@
                 },
 
                 generateRandomInt() {
-                    let result = 0;
-                    while (result < this.min_num) {
-                        result = Math.floor(Math.random() * this.sum_to)
+                    let randomInt = 0;
+                    while (randomInt < this.min_num) {
+                        randomInt = Math.floor(Math.random() * this.sum_to)
                     }
-                    return result
+                    return randomInt
                 },
+                generateOneFormula() {
+                    const num1 = this.generateRandomInt();
+                    const num2 = this.generateRandomInt();;
+                    const operator_index = Math.floor(Math.random() * this.operators.length);
+                    const operator = this.operators[operator_index];
 
-                generateFormula() {
+                    const printFormula = (x, y) => {
+                        const formula = {}
+                        formula.id = id++
+                        formula.text = x.toString()
+                            .concat(' ', operator)
+                            .concat(' ', y.toString())
+                            .concat(' ', '=');
+
+                        this.formulas.push(formula);
+                        return formula;
+                    }
+
+                    if (operator === '-' && num1 < num2) {
+                        printFormula(num2, num1);
+                    } else {
+                        printFormula(num1, num2);
+                    }
+                },
+                generateAllFormulas() {
                     console.log('generate formulas');
-                    this.generateRandomInt();
+                    this.generateOneFormula();
                 }
             }
         }).mount('#app')
@@ -75,7 +99,8 @@
             </div>
 
             <div>
-                <button type="button" class="btn btn-primary" v-on:click="generateFormula">Generate formulas</button>
+                <button type="button" class="btn btn-primary" v-on:click="generateAllFormulas">Generate
+                    formulas</button>
             </div>
 
             <div>
@@ -83,16 +108,25 @@
             </div>
         </header>
         <main>
+            <p>Minnum: {{min_num}}</p>
+            <p>Sum to: {{sum_to}}</p>
+            <p>Total:{{total}}</p>
             <div id="problems_container">
-                <p>Minnum: {{min_num}}</p>
-                <p>Sum to: {{sum_to}}</p>
-                <p>Total:{{total}}</p>
+                <div id="left">
+                    <ul class='list-group'>
+                        <li class="list-group-item flex-fill" v-for="formula in formulas" :key="formula.id">
+                            {{formula.text}}
+                        </li>
+                    </ul>
+                </div>
 
-                <ul class='list-group list-group-horizontal'>
-                    <li class="list-group-item flex-fill" v-for="formula in formulas" :key="formula.id">
-                        {{formula.text}}
-                    </li>
-                </ul>
+                <div id="right">
+                    <ul class='list-group'>
+                        <li class="list-group-item flex-fill" v-for="formula in formulas" :key="formula.id">
+                            {{formula.text}}
+                        </li>
+                    </ul>
+                </div>
             </div>
         </main>
     </div>

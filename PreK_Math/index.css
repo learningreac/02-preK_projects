@@ -15,16 +15,26 @@ header {
 }
 
 main {
-    display: flex;
-    flex-direction: column;
+   
     text-align: center;
 }
 
 #problems_container {
-    flex: 1;
-    height: 80vh;
-    padding: 2rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
 }
+
+#left #right {
+    flex: 50%;
+}
+
+/* Responsive layout - makes a one column layout instead of a two-column layout */
+@media (max-width: 800px) {
+    #problems_container  {
+      flex-direction: column;
+    }
+  }
 
 .list-group-item {
     font-size: 2rem;
