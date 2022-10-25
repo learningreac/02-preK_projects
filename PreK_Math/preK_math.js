@@ -6,14 +6,14 @@ const doc = new jsPDF();
 doc.text("This is the default font.", 20, 20);
 const generate_btn = document.querySelector('#generate_btn');
 generate_btn.addEventListener('click', () => doc.save("myPdf.pdf"))
-console.log(generate_btn) 
+
 
 let total_challenges = 20;
 let max_num = 50;
 let min_num = 10;
 let operators = ['+', '-'];
 const result = [];
-const result_container = document.getElementById('left');
+const result_container = document.getElementById('problems_container');
 
 const getRandomInt = (min,max) => {
     let result = 0;

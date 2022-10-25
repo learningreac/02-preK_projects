@@ -9,7 +9,6 @@
 
 header {
     height: 10vh;
-    background-color: azure;
     display: flex;
     flex-direction: row;
     justify-content: space-around;

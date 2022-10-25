@@ -21,22 +21,44 @@
 
     <script type="module">
         import { createApp } from 'vue'
+        let id = 0
 
         createApp({
             data() {
                 return {
-                    min_num: '',
-                    sum_to: '',
+                    min_num: 0,
+                    sum_to: 0,
+                    total: 0,
+                    formulas: [
+                        { id: id++, text: '45 - 23 =' },
+                        { id: id++, text: '40 + 34 =' },
+                        { id: id++, text: '29 - 21 =' }
+                    ]
                 }
             },
             methods: {
-               
+                generatePdf() {
+                    console.log('btn clicked')
+                },
+
+                generateRandomInt() {
+                    let result = 0;
+                    while (result < this.min_num) {
+                        result = Math.floor(Math.random() * this.sum_to)
+                    }
+                    return result
+                },
+
+                generateFormula() {
+                    console.log('generate formulas');
+                    this.generateRandomInt();
+                }
             }
         }).mount('#app')
     </script>
 
     <div id="app">
-        <header>
+        <header class="pt-5">
             <div>
                 <span>Minimum Number</span>
                 <input v-model="min_num" placeholder="Type here">
@@ -48,14 +70,29 @@
             </div>
 
             <div>
-                <button type="button" class="btn btn-primary" v-on:click="increment">Generate PDF</button>
+                <span>Total Challenges</span>
+                <input v-model="total" placeholder="Type here">
+            </div>
+
+            <div>
+                <button type="button" class="btn btn-primary" v-on:click="generateFormula">Generate formulas</button>
+            </div>
+
+            <div>
+                <button type="button" class="btn btn-secondary" v-on:click="generatePdf">Generate PDF</button>
             </div>
         </header>
         <main>
             <div id="problems_container">
                 <p>Minnum: {{min_num}}</p>
                 <p>Sum to: {{sum_to}}</p>
+                <p>Total:{{total}}</p>
 
+                <ul class='list-group list-group-horizontal'>
+                    <li class="list-group-item flex-fill" v-for="formula in formulas" :key="formula.id">
+                        {{formula.text}}
+                    </li>
+                </ul>
             </div>
         </main>
     </div>
