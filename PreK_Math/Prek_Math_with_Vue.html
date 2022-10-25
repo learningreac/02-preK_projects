@@ -107,14 +107,13 @@
                 <button type="button" class="btn btn-secondary" v-on:click="generatePdf">Generate PDF</button>
             </div>
         </header>
-        <main>
-            <p>Minnum: {{min_num}}</p>
-            <p>Sum to: {{sum_to}}</p>
-            <p>Total:{{total}}</p>
+        <main class="pt-5">
+          <p id="title"> Adding numbers to {{sum_to}}</p>
+           
             <div id="problems_container">
                 <div id="left">
                     <ul class='list-group'>
-                        <li class="list-group-item flex-fill" v-for="formula in formulas" :key="formula.id">
+                        <li class="list-group-item" v-for="formula in formulas" :key="formula.id">
                             {{formula.text}}
                         </li>
                     </ul>
@@ -122,7 +121,7 @@
 
                 <div id="right">
                     <ul class='list-group'>
-                        <li class="list-group-item flex-fill" v-for="formula in formulas" :key="formula.id">
+                        <li class="list-group-item" v-for="formula in formulas" :key="formula.id">
                             {{formula.text}}
                         </li>
                     </ul>
